@@ -1,19 +1,16 @@
-resource "azurerm_virtual_network" "virtualnetwork" {
-
-  name                = "shivam-vnet"
-  location            = "east us"
-  resource_group_name = "Shivam-resourcegroup"
-  address_space       = ["10.0.0.0/16"]
+resource "azurerm_virtual_network" "example" {
+  name                = var.network_name
+  location            = var.location
+  resource_group_name = var.rg_name
+  address_space       = var.address_space
 
   dynamic "subnet" {
-
-    for_each = var.subnet
+    for_each = var.subnets
 
     content {
-
-      name           = subnet.value.name
-      address_prefix = subnet.value.address_prefix
+      name           = subnet.value.subnet_name
+      address_prefix = subnet.value.subnet_address
     }
-
+    
   }
 }
